@@ -38,6 +38,7 @@ services:
       - API_URL=https://crud-app.run.place/django
       - BACKEND_FRAMEWORK=Django and MySQL
       - TITLE=CRUD-Django
+      - GITHUB_LINK=https://github.com/karthikeya0800/CRUD-Django
     ports:
       - '5173:5173'
     volumes:
