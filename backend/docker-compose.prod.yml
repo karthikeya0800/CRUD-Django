@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-prod
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: crud
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "python wait-for-it.py && python manage.py makemigrations app && python manage.py migrate && gunicorn project.wsgi:application --bind 0.0.0.0:3001"
+    container_name: crud-django-prod
+    # volumes:
+    #   - ./backend:/app
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+
+  # frontend:
+  #   image: karthikeya2100/crud-react:latest
+  #   container_name: crud-react
+  #   environment:
+  #     # - API_URL=http://localhost:3001
+  #     - API_URL=https://crud-app.run.place/django
+  #     - BACKEND_FRAMEWORK=Django and MySQL
+  #   ports:
+  #     - '5173:5173'
+  #   volumes:
+  #     - ./frontend:/app/dist  
+
+networks:
+  mynetwork:
