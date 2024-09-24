@@ -52,8 +52,8 @@ try_command ssh -i ~/.ssh/id_ed25519 karthikeya@crud-app.run.place "sudo mv -f /
 echo -e "\e[32mMoved nginx config to /etc/nginx/sites-available/default, replacing existing file if it exists\e[0m"
 
 #Delete existing docker images, containers, volumes and networks
-# try_command ssh -i ~/.ssh/id_ed25519 karthikeya@crud-app.run.place "sh docker-clear.sh"
-# echo -e "\e[32mDocker Cleared\e[0m"
+try_command ssh -i ~/.ssh/id_ed25519 karthikeya@crud-app.run.place "sh docker-clear.sh"
+echo -e "\e[32mDocker Cleared\e[0m"
 
 #Run Docker compose
 try_command ssh -i ~/.ssh/id_ed25519 karthikeya@crud-app.run.place "cd '$dir_name' && docker compose -f docker-compose.prod.yml up -d"
